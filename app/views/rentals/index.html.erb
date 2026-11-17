@@ -1,0 +1,32 @@
+<h1>Locações</h1>
+
+<%= link_to 'Nova Locação', new_rental_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Filme</th>
+      <th>Cliente</th>
+      <th>Data Locação</th>
+      <th>Data Devolução</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rentals.each do |rental| %>
+      <tr>
+        <td><%= rental.movie.title %></td>
+        <td><%= rental.customer.name %></td>
+        <td><%= rental.rented_at&.strftime('%d/%m/%Y %H:%M') %></td>
+        <td><%= rental.returned_at&.strftime('%d/%m/%Y %H:%M') || '-' %></td>
+        <td><%= rental.returned? ? 'Devolvida' : 'Alugada' %></td>
+        <td>
+          <% unless rental.returned? %>
+            <%= button_to 'Devolver', return_rental_path(rental), method: :patch %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

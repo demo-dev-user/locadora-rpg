@@ -1,0 +1,888 @@
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "customers"[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "customers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "movies"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "movies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "rentals"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "rentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6), "returned_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_customer_id" ON "rentals" ("customer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_movie_id" ON "rentals" ("movie_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "arentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6) DEFAULT NULL, "returned_at" datetime(6) DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_arentals_on_movie_id" ON "arentals" ("movie_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_arentals_on_customer_id" ON "arentals" ("customer_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "arentals" ("id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at")
+                     SELECT "id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at" FROM "rentals"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "rentals"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "rentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6) DEFAULT NULL, "returned_at" datetime(6) DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_0d77a6e91a"
+FOREIGN KEY ("customer_id")
+  REFERENCES "customers" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_customer_id" ON "rentals" ("customer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_movie_id" ON "rentals" ("movie_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "rentals" ("id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at")
+                     SELECT "id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at" FROM "arentals"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "arentals"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "arentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6) DEFAULT NULL, "returned_at" datetime(6) DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_arentals_on_movie_id" ON "arentals" ("movie_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_arentals_on_customer_id" ON "arentals" ("customer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "arentals" ("id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at")
+                     SELECT "id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at" FROM "rentals"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "rentals"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "rentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6) DEFAULT NULL, "returned_at" datetime(6) DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_0d77a6e91a"
+FOREIGN KEY ("customer_id")
+  REFERENCES "customers" ("id")
+, CONSTRAINT "fk_rails_2e53b99875"
+FOREIGN KEY ("movie_id")
+  REFERENCES "movies" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_customer_id" ON "rentals" ("customer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_movie_id" ON "rentals" ("movie_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "rentals" ("id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at")
+                     SELECT "id","movie_id","customer_id","rented_at","returned_at","created_at","updated_at" FROM "arentals"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "arentals"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20261117184745)[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20261117184741),
+(20261117184736);[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-11-17 18:48:38.268609', '2026-11-17 18:48:38.268613') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'f74808805181df41a5efafb3d8bd46045fba2757', '2026-11-17 18:48:38.269941', '2026-11-17 18:48:38.269944') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "customers";
+DELETE FROM "movies";
+DELETE FROM "rentals";
+INSERT INTO "customers" ("id", "name", "created_at", "updated_at") VALUES (980190962, 'MyString', '2026-11-17 18:48:58.303181', '2026-11-17 18:48:58.303181');
+INSERT INTO "customers" ("id", "name", "created_at", "updated_at") VALUES (298486374, 'MyString', '2026-11-17 18:48:58.303181', '2026-11-17 18:48:58.303181');
+INSERT INTO "movies" ("id", "title", "status", "created_at", "updated_at") VALUES (980190962, 'MyString', 'MyString', '2026-11-17 18:48:58.305472', '2026-11-17 18:48:58.305472');
+INSERT INTO "movies" ("id", "title", "status", "created_at", "updated_at") VALUES (298486374, 'MyString', 'MyString', '2026-11-17 18:48:58.305472', '2026-11-17 18:48:58.305472');
+INSERT INTO "rentals" ("id", "movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (980190962, 980190962, 980190962, '2026-11-17 18:47:45', '2026-11-17 18:47:45', '2026-11-17 18:48:58.306526', '2026-11-17 18:48:58.306526');
+INSERT INTO "rentals" ("id", "movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (298486374, 298486374, 298486374, '2026-11-17 18:47:45', '2026-11-17 18:47:45', '2026-11-17 18:48:58.306526', '2026-11-17 18:48:58.306526')[0m
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------
+MovieTest: test_should_not_save_movie_with_invalid_status
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+MovieTest: test_should_save_movie_with_title
+--------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.4ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Senhor dos Anéis"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.332835"], ["updated_at", "2026-11-17 18:48:58.332835"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+MovieTest: test_rented?_should_return_true_when_status_is_rented
+----------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Matrix"], ["status", "rented"], ["created_at", "2026-11-17 18:48:58.336431"], ["updated_at", "2026-11-17 18:48:58.336431"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+MovieTest: test_should_have_default_status_available
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Star Wars"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.338004"], ["updated_at", "2026-11-17 18:48:58.338004"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+MovieTest: test_should_not_save_movie_without_title
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------
+CustomerTest: test_should_not_save_customer_without_name
+--------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+CustomerTest: test_should_save_customer_with_name
+-------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "João Silva"], ["created_at", "2026-11-17 18:48:58.346239"], ["updated_at", "2026-11-17 18:48:58.346239"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+RentalTest: test_should_not_return_movie_twice
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.348035"], ["updated_at", "2026-11-17 18:48:58.348035"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.348994"], ["updated_at", "2026-11-17 18:48:58.348994"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.5ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.359456"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:48:58.359243"], ["returned_at", nil], ["created_at", "2026-11-17 18:48:58.359191"], ["updated_at", "2026-11-17 18:48:58.359191"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.2ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:48:58.371350"], ["updated_at", "2026-11-17 18:48:58.371758"], ["id", 980190963]]
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:48:58.372941"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+RentalTest: test_should_return_movie
+------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.3ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.374888"], ["updated_at", "2026-11-17 18:48:58.374888"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.376054"], ["updated_at", "2026-11-17 18:48:58.376054"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.377462"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:48:58.377303"], ["returned_at", nil], ["created_at", "2026-11-17 18:48:58.377276"], ["updated_at", "2026-11-17 18:48:58.377276"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.1ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:48:58.380551"], ["updated_at", "2026-11-17 18:48:58.381074"], ["id", 980190963]]
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:48:58.382357"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+RentalTest: test_should_create_rental_with_available_movie
+----------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.384589"], ["updated_at", "2026-11-17 18:48:58.384589"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.385505"], ["updated_at", "2026-11-17 18:48:58.385505"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.386953"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:48:58.386832"], ["returned_at", nil], ["created_at", "2026-11-17 18:48:58.386807"], ["updated_at", "2026-11-17 18:48:58.386807"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------------
+RentalTest: test_returned?_should_be_false_for_active_rental
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.389966"], ["updated_at", "2026-11-17 18:48:58.389966"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.390795"], ["updated_at", "2026-11-17 18:48:58.390795"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.391985"], ["id", 980190963]]
+  [1m[36mRental Create (0.2ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:48:58.391871"], ["returned_at", nil], ["created_at", "2026-11-17 18:48:58.391847"], ["updated_at", "2026-11-17 18:48:58.391847"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------
+RentalTest: test_returned?_should_be_true_for_returned_rental
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.394543"], ["updated_at", "2026-11-17 18:48:58.394543"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.395410"], ["updated_at", "2026-11-17 18:48:58.395410"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.396686"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:48:58.396575"], ["returned_at", nil], ["created_at", "2026-11-17 18:48:58.396546"], ["updated_at", "2026-11-17 18:48:58.396546"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.1ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:48:58.398074"], ["updated_at", "2026-11-17 18:48:58.398269"], ["id", 980190963]]
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:48:58.398857"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------
+RentalTest: test_should_not_create_rental_with_rented_movie
+-----------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:48:58.400180"], ["updated_at", "2026-11-17 18:48:58.400180"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:48:58.400980"], ["updated_at", "2026-11-17 18:48:58.400980"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.3ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:48:58.401812"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+MoviesControllerTest: test_should_show_movie
+--------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/movies/980190962" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/_movie.html.erb (Duration: 1.0ms | Allocations: 214)
+  Rendered movies/show.html.erb within layouts/application (Duration: 6.6ms | Allocations: 1457)
+  Rendered layout layouts/application.html.erb (Duration: 290.9ms | Allocations: 70277)
+Completed 200 OK in 316ms (Views: 298.0ms | ActiveRecord: 0.1ms | Allocations: 78213)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+MoviesControllerTest: test_should_create_movie
+----------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mMovie Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+Started POST "/movies" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#create as HTML
+  Parameters: {"movie"=>{"status"=>"MyString", "title"=>"MyString"}}
+  Rendering layout layouts/application.html.erb
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 6.0ms | Allocations: 2880)
+  Rendered movies/new.html.erb within layouts/application (Duration: 7.0ms | Allocations: 3153)
+  Rendered layout layouts/application.html.erb (Duration: 7.6ms | Allocations: 3564)
+Completed 422 Unprocessable Content in 10ms (Views: 8.4ms | ActiveRecord: 0.0ms | Allocations: 4166)
+  [1m[36mCACHE Movie Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+MoviesControllerTest: test_should_get_edit
+------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/movies/980190962/edit" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering movies/edit.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 0.9ms | Allocations: 543)
+  Rendered movies/edit.html.erb within layouts/application (Duration: 1.5ms | Allocations: 786)
+  Rendered layout layouts/application.html.erb (Duration: 2.6ms | Allocations: 1194)
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms | Allocations: 1586)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+MoviesControllerTest: test_should_update_movie
+----------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started PATCH "/movies/980190962" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#update as HTML
+  Parameters: {"movie"=>{"status"=>"MyString", "title"=>"MyString"}, "id"=>"980190962"}
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering movies/edit.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 1.1ms | Allocations: 1253)
+  Rendered movies/edit.html.erb within layouts/application (Duration: 1.3ms | Allocations: 1344)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | Allocations: 1752)
+Completed 422 Unprocessable Content in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 2311)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+MoviesControllerTest: test_should_get_new
+-----------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/movies/new" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 0.7ms | Allocations: 493)
+  Rendered movies/new.html.erb within layouts/application (Duration: 0.9ms | Allocations: 559)
+  Rendered layout layouts/application.html.erb (Duration: 1.3ms | Allocations: 971)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 1182)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+MoviesControllerTest: test_should_destroy_movie
+-----------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mMovie Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+Started DELETE "/movies/980190962" for 127.0.0.1 at 2026-11-17 18:48:58 +0000
+Processing by MoviesController#destroy as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Destroy (0.6ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = ?[0m  [["id", 980190962]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.7ms | Allocations: 733)
+MoviesControllerTest - test_should_destroy_movie: ActiveRecord::InvalidForeignKey raised.
+If you expected this exception, use `assert_raises` as near to the code that raises as possible.
+Other block based assertions (e.g. `assert_difference`) can be used, as long as `assert_raises` is inside their block.
+
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+MoviesControllerTest: test_should_get_index
+-------------------------------------------
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/movies" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  Rendered movies/_movie.html.erb (Duration: 3.3ms | Allocations: 20)
+  Rendered movies/_movie.html.erb (Duration: 0.1ms | Allocations: 19)
+  Rendered movies/index.html.erb within layouts/application (Duration: 8.9ms | Allocations: 701)
+  Rendered layout layouts/application.html.erb (Duration: 13.0ms | Allocations: 1113)
+Completed 200 OK in 14ms (Views: 13.2ms | ActiveRecord: 0.1ms | Allocations: 1409)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+CustomersControllerTest: test_should_show_customer
+--------------------------------------------------
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/customers/980190962" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#show as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering customers/show.html.erb within layouts/application
+  Rendered customers/_customer.html.erb (Duration: 0.5ms | Allocations: 145)
+  Rendered customers/show.html.erb within layouts/application (Duration: 2.2ms | Allocations: 726)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | Allocations: 1140)
+Completed 200 OK in 40ms (Views: 38.8ms | ActiveRecord: 0.1ms | Allocations: 1874)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CustomersControllerTest: test_should_create_customer
+----------------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mCustomer Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Started POST "/customers" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#create as HTML
+  Parameters: {"customer"=>{"name"=>"MyString"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.4ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "MyString"], ["created_at", "2026-11-17 18:48:59.089842"], ["updated_at", "2026-11-17 18:48:59.089842"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/customers/980190963
+Completed 302 Found in 3ms (ActiveRecord: 0.5ms | Allocations: 828)
+  [1m[36mCustomer Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" ORDER BY "customers"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+CustomersControllerTest: test_should_get_edit
+---------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/customers/980190962/edit" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#edit as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering customers/edit.html.erb within layouts/application
+  Rendered customers/_form.html.erb (Duration: 1.4ms | Allocations: 708)
+  Rendered customers/edit.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1014)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | Allocations: 1423)
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.0ms | Allocations: 1813)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CustomersControllerTest: test_should_update_customer
+----------------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started PATCH "/customers/980190962" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#update as HTML
+  Parameters: {"customer"=>{"name"=>"MyString"}, "id"=>"980190962"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Redirected to http://www.example.com/customers/980190962
+Completed 303 See Other in 1ms (ActiveRecord: 0.0ms | Allocations: 507)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+CustomersControllerTest: test_should_get_new
+--------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/customers/new" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering customers/new.html.erb within layouts/application
+  Rendered customers/_form.html.erb (Duration: 0.7ms | Allocations: 338)
+  Rendered customers/new.html.erb within layouts/application (Duration: 2.6ms | Allocations: 538)
+  Rendered layout layouts/application.html.erb (Duration: 3.2ms | Allocations: 950)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.0ms | Allocations: 1221)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------
+CustomersControllerTest: test_should_destroy_customer
+-----------------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mCustomer Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Started DELETE "/customers/980190962" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#destroy as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Destroy (0.5ms)[0m  [1m[31mDELETE FROM "customers" WHERE "customers"."id" = ?[0m  [["id", 980190962]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.6ms | Allocations: 639)
+CustomersControllerTest - test_should_destroy_customer: ActiveRecord::InvalidForeignKey raised.
+If you expected this exception, use `assert_raises` as near to the code that raises as possible.
+Other block based assertions (e.g. `assert_difference`) can be used, as long as `assert_raises` is inside their block.
+
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+CustomersControllerTest: test_should_get_index
+----------------------------------------------
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190962], ["LIMIT", 1]]
+Started GET "/customers" for 127.0.0.1 at 2026-11-17 18:48:59 +0000
+Processing by CustomersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering customers/index.html.erb within layouts/application
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers"[0m
+  Rendered customers/_customer.html.erb (Duration: 0.1ms | Allocations: 17)
+  Rendered customers/_customer.html.erb (Duration: 0.1ms | Allocations: 16)
+  Rendered customers/index.html.erb within layouts/application (Duration: 1.9ms | Allocations: 684)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | Allocations: 1096)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.1ms | Allocations: 1393)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.3ms)[0m  [1m[31mDELETE FROM "customers";
+DELETE FROM "movies";
+DELETE FROM "rentals";
+INSERT INTO "customers" ("id", "name", "created_at", "updated_at") VALUES (980190962, 'MyString', '2026-11-17 18:49:18.094783', '2026-11-17 18:49:18.094783');
+INSERT INTO "customers" ("id", "name", "created_at", "updated_at") VALUES (298486374, 'MyString', '2026-11-17 18:49:18.094783', '2026-11-17 18:49:18.094783');
+INSERT INTO "movies" ("id", "title", "status", "created_at", "updated_at") VALUES (980190962, 'O Senhor dos Anéis', 'available', '2026-11-17 18:49:18.096205', '2026-11-17 18:49:18.096205');
+INSERT INTO "movies" ("id", "title", "status", "created_at", "updated_at") VALUES (298486374, 'Star Wars', 'available', '2026-11-17 18:49:18.096205', '2026-11-17 18:49:18.096205');
+INSERT INTO "rentals" ("id", "movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (980190962, 980190962, 980190962, '2026-11-17 18:47:45', '2026-11-17 18:47:45', '2026-11-17 18:49:18.096892', '2026-11-17 18:49:18.096892');
+INSERT INTO "rentals" ("id", "movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (298486374, 298486374, 298486374, '2026-11-17 18:47:45', '2026-11-17 18:47:45', '2026-11-17 18:49:18.096892', '2026-11-17 18:49:18.096892')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+MoviesControllerTest: test_should_destroy_movie
+-----------------------------------------------
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.7ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.157777"], ["updated_at", "2026-11-17 18:49:18.157777"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+Started DELETE "/movies/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#destroy as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Destroy (0.2ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = ?[0m  [["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/movies
+Completed 303 See Other in 7ms (ActiveRecord: 0.4ms | Allocations: 2632)
+  [1m[36mMovie Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+MoviesControllerTest: test_should_create_movie
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.4ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.265354"], ["updated_at", "2026-11-17 18:49:18.265354"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+Started POST "/movies" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#create as HTML
+  Parameters: {"movie"=>{"status"=>"available", "title"=>"Novo Filme"}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Novo Filme"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.269510"], ["updated_at", "2026-11-17 18:49:18.269510"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/movies/980190964
+Completed 302 Found in 2ms (ActiveRecord: 0.3ms | Allocations: 872)
+  [1m[36mMovie Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "movies"[0m
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" ORDER BY "movies"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+MoviesControllerTest: test_should_get_edit
+------------------------------------------
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.6ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.296257"], ["updated_at", "2026-11-17 18:49:18.296257"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/movies/980190963/edit" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering movies/edit.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 4.4ms | Allocations: 1713)
+  Rendered movies/edit.html.erb within layouts/application (Duration: 6.4ms | Allocations: 2181)
+  Rendered layout layouts/application.html.erb (Duration: 39.7ms | Allocations: 18505)
+Completed 200 OK in 51ms (Views: 44.5ms | ActiveRecord: 0.0ms | Allocations: 21736)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+MoviesControllerTest: test_should_get_index
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.4ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.352390"], ["updated_at", "2026-11-17 18:49:18.352390"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/movies" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  Rendered movies/_movie.html.erb (Duration: 0.7ms | Allocations: 196)
+  Rendered movies/_movie.html.erb (Duration: 0.0ms | Allocations: 20)
+  Rendered movies/_movie.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered movies/index.html.erb within layouts/application (Duration: 4.0ms | Allocations: 1225)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | Allocations: 1637)
+Completed 200 OK in 6ms (Views: 4.9ms | ActiveRecord: 0.1ms | Allocations: 1934)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+MoviesControllerTest: test_should_update_movie
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.4ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.363226"], ["updated_at", "2026-11-17 18:49:18.363226"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started PATCH "/movies/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#update as HTML
+  Parameters: {"movie"=>{"status"=>"available", "title"=>"Filme Atualizado"}, "id"=>"980190963"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "title" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["title", "Filme Atualizado"], ["updated_at", "2026-11-17 18:49:18.367951"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/movies/980190963
+Completed 303 See Other in 3ms (ActiveRecord: 0.3ms | Allocations: 993)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+MoviesControllerTest: test_should_show_movie
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.371770"], ["updated_at", "2026-11-17 18:49:18.371770"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/movies/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/_movie.html.erb (Duration: 0.1ms | Allocations: 20)
+  Rendered movies/show.html.erb within layouts/application (Duration: 1.5ms | Allocations: 469)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | Allocations: 877)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms | Allocations: 1292)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+MoviesControllerTest: test_should_get_new
+-----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Filme Teste"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.379382"], ["updated_at", "2026-11-17 18:49:18.379382"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/movies/new" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by MoviesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (Duration: 0.8ms | Allocations: 514)
+  Rendered movies/new.html.erb within layouts/application (Duration: 1.4ms | Allocations: 714)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | Allocations: 1126)
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 1399)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------
+RentalTest: test_returned?_should_be_true_for_returned_rental
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.8ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.390929"], ["updated_at", "2026-11-17 18:49:18.390929"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.392727"], ["updated_at", "2026-11-17 18:49:18.392727"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.4ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.401547"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:49:18.401349"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:18.401283"], ["updated_at", "2026-11-17 18:49:18.401283"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.1ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:49:18.403706"], ["updated_at", "2026-11-17 18:49:18.403914"], ["id", 980190963]]
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:49:18.404576"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------------
+RentalTest: test_returned?_should_be_false_for_active_rental
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.406115"], ["updated_at", "2026-11-17 18:49:18.406115"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.1ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.406876"], ["updated_at", "2026-11-17 18:49:18.406876"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.407832"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:49:18.407744"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:18.407725"], ["updated_at", "2026-11-17 18:49:18.407725"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+RentalTest: test_should_create_rental_with_available_movie
+----------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.409350"], ["updated_at", "2026-11-17 18:49:18.409350"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.409957"], ["updated_at", "2026-11-17 18:49:18.409957"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.410930"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:49:18.410832"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:18.410803"], ["updated_at", "2026-11-17 18:49:18.410803"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------
+RentalTest: test_should_not_create_rental_with_rented_movie
+-----------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.413132"], ["updated_at", "2026-11-17 18:49:18.413132"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.1ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.413871"], ["updated_at", "2026-11-17 18:49:18.413871"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.414585"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+RentalTest: test_should_return_movie
+------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.416125"], ["updated_at", "2026-11-17 18:49:18.416125"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.417016"], ["updated_at", "2026-11-17 18:49:18.417016"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.2ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.417993"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:49:18.417917"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:18.417900"], ["updated_at", "2026-11-17 18:49:18.417900"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.1ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:49:18.419659"], ["updated_at", "2026-11-17 18:49:18.419853"], ["id", 980190963]]
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:49:18.420359"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMovie Load (0.0ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+RentalTest: test_should_not_return_movie_twice
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Maria Santos"], ["created_at", "2026-11-17 18:49:18.422073"], ["updated_at", "2026-11-17 18:49:18.422073"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.1ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Poderoso Chefão"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.422789"], ["updated_at", "2026-11-17 18:49:18.422789"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:18.423579"], ["id", 980190963]]
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 980190963], ["customer_id", 980190963], ["rented_at", "2026-11-17 18:49:18.423505"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:18.423489"], ["updated_at", "2026-11-17 18:49:18.423489"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRental Update (0.1ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:49:18.424621"], ["updated_at", "2026-11-17 18:49:18.424900"], ["id", 980190963]]
+  [1m[36mMovie Update (0.0ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:49:18.425410"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+CustomerTest: test_should_save_customer_with_name
+-------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "João Silva"], ["created_at", "2026-11-17 18:49:18.427148"], ["updated_at", "2026-11-17 18:49:18.427148"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------
+CustomerTest: test_should_not_save_customer_without_name
+--------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------
+MovieTest: test_should_not_save_movie_with_invalid_status
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+MovieTest: test_should_not_save_movie_without_title
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+MovieTest: test_rented?_should_return_true_when_status_is_rented
+----------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Matrix"], ["status", "rented"], ["created_at", "2026-11-17 18:49:18.430517"], ["updated_at", "2026-11-17 18:49:18.430517"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+MovieTest: test_should_have_default_status_available
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "Star Wars"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.431905"], ["updated_at", "2026-11-17 18:49:18.431905"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+MovieTest: test_should_save_movie_with_title
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Senhor dos Anéis"], ["status", "available"], ["created_at", "2026-11-17 18:49:18.433033"], ["updated_at", "2026-11-17 18:49:18.433033"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------
+CustomersControllerTest: test_should_destroy_customer
+-----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.434617"], ["updated_at", "2026-11-17 18:49:18.434617"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCustomer Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Started DELETE "/customers/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#destroy as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Destroy (0.2ms)[0m  [1m[31mDELETE FROM "customers" WHERE "customers"."id" = ?[0m  [["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/customers
+Completed 303 See Other in 2ms (ActiveRecord: 0.4ms | Allocations: 902)
+  [1m[36mCustomer Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CustomersControllerTest: test_should_create_customer
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.443961"], ["updated_at", "2026-11-17 18:49:18.443961"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCustomer Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Started POST "/customers" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#create as HTML
+  Parameters: {"customer"=>{"name"=>"Novo Cliente"}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Novo Cliente"], ["created_at", "2026-11-17 18:49:18.446562"], ["updated_at", "2026-11-17 18:49:18.446562"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/customers/980190964
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms | Allocations: 753)
+  [1m[36mCustomer Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers" ORDER BY "customers"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+CustomersControllerTest: test_should_get_edit
+---------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.450750"], ["updated_at", "2026-11-17 18:49:18.450750"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/customers/980190963/edit" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#edit as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering customers/edit.html.erb within layouts/application
+  Rendered customers/_form.html.erb (Duration: 1.3ms | Allocations: 714)
+  Rendered customers/edit.html.erb within layouts/application (Duration: 2.1ms | Allocations: 1023)
+  Rendered layout layouts/application.html.erb (Duration: 2.6ms | Allocations: 1433)
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms | Allocations: 1939)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------
+CustomersControllerTest: test_should_get_index
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.3ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.458019"], ["updated_at", "2026-11-17 18:49:18.458019"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/customers" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering customers/index.html.erb within layouts/application
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT "customers".* FROM "customers"[0m
+  Rendered customers/_customer.html.erb (Duration: 0.4ms | Allocations: 143)
+  Rendered customers/_customer.html.erb (Duration: 0.0ms | Allocations: 16)
+  Rendered customers/_customer.html.erb (Duration: 0.0ms | Allocations: 16)
+  Rendered customers/index.html.erb within layouts/application (Duration: 2.6ms | Allocations: 1044)
+  Rendered layout layouts/application.html.erb (Duration: 3.2ms | Allocations: 1456)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.1ms | Allocations: 1752)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------
+CustomersControllerTest: test_should_update_customer
+----------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.3ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.465897"], ["updated_at", "2026-11-17 18:49:18.465897"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started PATCH "/customers/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#update as HTML
+  Parameters: {"customer"=>{"name"=>"Cliente Atualizado"}, "id"=>"980190963"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Update (0.2ms)[0m  [1m[33mUPDATE "customers" SET "name" = ?, "updated_at" = ? WHERE "customers"."id" = ?[0m  [["name", "Cliente Atualizado"], ["updated_at", "2026-11-17 18:49:18.468943"], ["id", 980190963]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/customers/980190963
+Completed 303 See Other in 2ms (ActiveRecord: 0.3ms | Allocations: 841)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+CustomersControllerTest: test_should_show_customer
+--------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.472146"], ["updated_at", "2026-11-17 18:49:18.472146"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/customers/980190963" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#show as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 980190963], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering customers/show.html.erb within layouts/application
+  Rendered customers/_customer.html.erb (Duration: 0.2ms | Allocations: 17)
+  Rendered customers/show.html.erb within layouts/application (Duration: 1.6ms | Allocations: 454)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | Allocations: 862)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms | Allocations: 1276)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------
+CustomersControllerTest: test_should_get_new
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "Cliente Teste"], ["created_at", "2026-11-17 18:49:18.479356"], ["updated_at", "2026-11-17 18:49:18.479356"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/customers/new" for 127.0.0.1 at 2026-11-17 18:49:18 +0000
+Processing by CustomersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering customers/new.html.erb within layouts/application
+  Rendered customers/_form.html.erb (Duration: 0.8ms | Allocations: 338)
+  Rendered customers/new.html.erb within layouts/application (Duration: 1.7ms | Allocations: 538)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | Allocations: 950)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms | Allocations: 1221)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m

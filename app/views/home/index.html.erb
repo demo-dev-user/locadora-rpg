@@ -1,9 +1,19 @@
-<h1>Locadora RPG</h1>
+<div class="py-12 text-center">
+  <h1 class="text-4xl font-bold text-sky-400 mb-3">Locadora RPG</h1>
+  <p class="text-slate-300 mb-10">Sistema de gerenciamento de locadora de filmes.</p>
 
-<p>Sistema de gerenciamento de locadora de filmes.</p>
-
-<ul>
-  <li><%= link_to 'Clientes', customers_path %></li>
-  <li><%= link_to 'Filmes', movies_path %></li>
-  <li><%= link_to 'Locações', rentals_path %></li>
-</ul>
+  <div class="grid gap-4 max-w-2xl mx-auto sm:grid-cols-3">
+    <%= link_to customers_path, class: "block rounded-lg border border-slate-700 bg-slate-800 p-6 hover:border-sky-500" do %>
+      <span class="text-2xl">👥</span>
+      <p class="mt-2 font-semibold">Clientes</p>
+    <% end %>
+    <%= link_to movies_path, class: "block rounded-lg border border-slate-700 bg-slate-800 p-6 hover:border-sky-500" do %>
+      <span class="text-2xl">🎬</span>
+      <p class="mt-2 font-semibold">Filmes</p>
+    <% end %>
+    <%= link_to rentals_path, class: "block rounded-lg border border-slate-700 bg-slate-800 p-6 hover:border-sky-500" do %>
+      <span class="text-2xl">📋</span>
+      <p class="mt-2 font-semibold">Locações</p>
+    <% end %>
+  </div>
+</div>

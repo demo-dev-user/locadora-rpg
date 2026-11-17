@@ -1,14 +1,19 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="text-3xl font-bold mb-6">Clientes</h1>
 
-<h1>Customers</h1>
+<% if @customers.any? %>
+  <div class="space-y-3 mb-6">
+    <% @customers.each do |customer| %>
+      <div id="<%= dom_id customer %>" class="rounded-lg border border-slate-700 bg-slate-800 p-4 flex items-center justify-between">
+        <p class="text-lg">
+          <strong class="text-slate-400">Nome:</strong>
+          <%= customer.name %>
+        </p>
+        <%= link_to "Ver", customer, class: "text-sky-400 hover:text-sky-300" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-slate-400 mb-6">Nenhum cliente cadastrado.</p>
+<% end %>
 
-<div id="customers">
-  <% @customers.each do |customer| %>
-    <%= render customer %>
-    <p>
-      <%= link_to "Show this customer", customer %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New customer", new_customer_path %>
+<%= link_to "Novo cliente", new_customer_path, class: "inline-block rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-500" %>

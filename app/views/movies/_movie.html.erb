@@ -1,12 +1,14 @@
-<div id="<%= dom_id movie %>">
-  <p>
-    <strong>Título:</strong>
+<div id="<%= dom_id movie %>" class="rounded-lg border border-slate-700 bg-slate-800 p-4">
+  <p class="text-lg">
+    <strong class="text-slate-400">Título:</strong>
     <%= movie.title %>
   </p>
 
-  <p>
-    <strong>Status:</strong>
-    <%= movie.available? ? 'Disponível' : 'Alugado' %>
+  <p class="mt-2">
+    <% if movie.available? %>
+      <span class="inline-block rounded-full bg-emerald-500/20 border border-emerald-500 px-3 py-1 text-sm font-semibold text-emerald-300">Disponível</span>
+    <% else %>
+      <span class="inline-block rounded-full bg-amber-500/20 border border-amber-500 px-3 py-1 text-sm font-semibold text-amber-300">Alugado</span>
+    <% end %>
   </p>
-
 </div>

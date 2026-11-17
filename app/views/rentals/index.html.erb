@@ -1,32 +1,38 @@
-<h1>Locações</h1>
+<h1 class="text-3xl font-bold mb-6">Locações</h1>
 
-<%= link_to 'Nova Locação', new_rental_path %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Filme</th>
-      <th>Cliente</th>
-      <th>Data Locação</th>
-      <th>Data Devolução</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
+<% if @rentals.any? %>
+  <div class="space-y-3 mb-6">
     <% @rentals.each do |rental| %>
-      <tr>
-        <td><%= rental.movie.title %></td>
-        <td><%= rental.customer.name %></td>
-        <td><%= rental.rented_at&.strftime('%d/%m/%Y %H:%M') %></td>
-        <td><%= rental.returned_at&.strftime('%d/%m/%Y %H:%M') || '-' %></td>
-        <td><%= rental.returned? ? 'Devolvida' : 'Alugada' %></td>
-        <td>
-          <% unless rental.returned? %>
-            <%= button_to 'Devolver', return_rental_path(rental), method: :patch %>
-          <% end %>
-        </td>
-      </tr>
+      <div class="rounded-lg border border-slate-700 bg-slate-800 p-4 flex items-center justify-between gap-4">
+        <div>
+          <p class="text-lg">
+            <strong class="text-slate-400">Filme:</strong>
+            <%= rental.movie.title %>
+          </p>
+          <p>
+            <strong class="text-slate-400">Cliente:</strong>
+            <%= rental.customer.name %>
+          </p>
+          <p class="text-sm text-slate-400">
+            Locação: <%= rental.rented_at&.strftime('%d/%m/%Y %H:%M') %> |
+            Devolução: <%= rental.returned_at&.strftime('%d/%m/%Y %H:%M') || '-' %>
+          </p>
+          <p class="mt-2">
+            <% if rental.returned? %>
+              <span class="inline-block rounded-full bg-slate-500/20 border border-slate-500 px-3 py-1 text-sm font-semibold text-slate-300">Devolvida</span>
+            <% else %>
+              <span class="inline-block rounded-full bg-amber-500/20 border border-amber-500 px-3 py-1 text-sm font-semibold text-amber-300">Alugada</span>
+            <% end %>
+          </p>
+        </div>
+        <% unless rental.returned? %>
+          <%= button_to "Devolver", return_rental_path(rental), method: :patch, class: "cursor-pointer shrink-0 rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white hover:bg-emerald-500" %>
+        <% end %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+<% else %>
+  <p class="text-slate-400 mb-6">Nenhuma locação registrada.</p>
+<% end %>
+
+<%= link_to "Nova locação", new_rental_path, class: "inline-block rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-500" %>

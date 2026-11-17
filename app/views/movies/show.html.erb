@@ -1,10 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @movie %>
 
-<div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
-  <%= link_to "Back to movies", movies_path %>
-
-  <%= button_to "Destroy this movie", @movie, method: :delete %>
+<div class="flex items-center gap-4">
+  <%= link_to "Editar este filme", edit_movie_path(@movie), class: "rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-500" %>
+  <%= link_to "Voltar para filmes", movies_path, class: "text-sky-400 hover:text-sky-300" %>
+  <%= button_to "Excluir este filme", @movie, method: :delete, class: "cursor-pointer rounded-lg bg-red-600/80 px-4 py-2 font-semibold text-white hover:bg-red-500" %>
 </div>

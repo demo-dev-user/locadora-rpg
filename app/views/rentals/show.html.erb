@@ -1,28 +1,38 @@
-<h1>Detalhes da Locação</h1>
+<h1 class="text-3xl font-bold mb-6">Detalhes da locação</h1>
 
-<p>
-  <strong>Filme:</strong>
-  <%= @rental.movie.title %>
-</p>
+<div class="rounded-lg border border-slate-700 bg-slate-800 p-6 mb-6">
+  <p class="text-lg">
+    <strong class="text-slate-400">Filme:</strong>
+    <%= @rental.movie.title %>
+  </p>
 
-<p>
-  <strong>Cliente:</strong>
-  <%= @rental.customer.name %>
-</p>
+  <p class="mt-2">
+    <strong class="text-slate-400">Cliente:</strong>
+    <%= @rental.customer.name %>
+  </p>
 
-<p>
-  <strong>Data Locação:</strong>
-  <%= @rental.rented_at&.strftime('%d/%m/%Y %H:%M') %>
-</p>
+  <p class="mt-2">
+    <strong class="text-slate-400">Data Locação:</strong>
+    <%= @rental.rented_at&.strftime('%d/%m/%Y %H:%M') %>
+  </p>
 
-<p>
-  <strong>Data Devolução:</strong>
-  <%= @rental.returned_at&.strftime('%d/%m/%Y %H:%M') || 'Não devolvido' %>
-</p>
+  <p class="mt-2">
+    <strong class="text-slate-400">Data Devolução:</strong>
+    <%= @rental.returned_at&.strftime('%d/%m/%Y %H:%M') || 'Não devolvido' %>
+  </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @rental.returned? ? 'Devolvida' : 'Alugada' %>
-</p>
+  <p class="mt-3">
+    <% if @rental.returned? %>
+      <span class="inline-block rounded-full bg-slate-500/20 border border-slate-500 px-3 py-1 text-sm font-semibold text-slate-300">Devolvida</span>
+    <% else %>
+      <span class="inline-block rounded-full bg-amber-500/20 border border-amber-500 px-3 py-1 text-sm font-semibold text-amber-300">Alugada</span>
+    <% end %>
+  </p>
+</div>
 
-<%= link_to 'Voltar', rentals_path %>
+<div class="flex items-center gap-4">
+  <% unless @rental.returned? %>
+    <%= button_to "Devolver", return_rental_path(@rental), method: :patch, class: "cursor-pointer rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white hover:bg-emerald-500" %>
+  <% end %>
+  <%= link_to 'Voltar para locações', rentals_path, class: "text-sky-400 hover:text-sky-300" %>
+</div>

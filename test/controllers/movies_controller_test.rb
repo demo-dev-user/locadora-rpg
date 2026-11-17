@@ -46,6 +46,13 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to movie_url(@movie)
   end
 
+  test "should not change status via update" do
+    patch movie_url(@movie), params: { movie: { title: @movie.title, status: "rented" } }
+
+    assert_redirected_to movie_url(@movie)
+    assert_equal "available", @movie.reload.status
+  end
+
   test "should destroy movie" do
     assert_difference("Movie.count", -1) do
       delete movie_url(@movie)

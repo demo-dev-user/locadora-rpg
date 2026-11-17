@@ -63,8 +63,8 @@ class MoviesController < ApplicationController
       @movie = Movie.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Status é derivado da locação (alugar/devolver): nunca editável manualmente.
     def movie_params
-      params.require(:movie).permit(:title, :status)
+      params.require(:movie).permit(:title)
     end
 end

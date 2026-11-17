@@ -1,0 +1,17 @@
+# Docker Compose para a Locadora RPG
+# Uso: docker compose up --build
+# Acesse: http://localhost:3000
+
+services:
+  web:
+    build: .
+    image: locadora-rpg:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./storage:/rails/storage
+      - ./log:/rails/log
+      - ./tmp:/rails/tmp
+    environment:
+      RAILS_ENV: "development"
+      BUNDLE_WITHOUT: ""

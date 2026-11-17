@@ -25,7 +25,7 @@ class Rental < ApplicationRecord
     return unless movie
 
     unless movie.available?
-      errors.add(:movie, 'Filme já alugado. Devolva antes de alugar de novo.')
+      errors.add(:base, 'Filme já alugado. Devolva antes de alugar de novo.')
     end
   end
 

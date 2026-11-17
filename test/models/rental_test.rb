@@ -17,7 +17,7 @@ class RentalTest < ActiveSupport::TestCase
     @movie.update!(status: "rented")
     rental = Rental.new(movie: @movie, customer: @customer)
     assert_not rental.save, "Saved rental with rented movie"
-    assert_includes rental.errors[:movie], "Filme já alugado. Devolva antes de alugar de novo."
+    assert_includes rental.errors[:base], "Filme já alugado. Devolva antes de alugar de novo."
   end
 
   test "should return movie" do
@@ -45,5 +45,13 @@ class RentalTest < ActiveSupport::TestCase
     rental = Rental.create!(movie: @movie, customer: @customer)
     rental.return!
     assert rental.returned?
+  end
+
+  test "can rent the same movie again after returning it" do
+    Rental.create!(movie: @movie, customer: @customer).return!
+    assert_equal "available", @movie.reload.status
+
+    assert Rental.create!(movie: @movie, customer: @customer), "Could not rent the movie again after returning"
+    assert_equal "rented", @movie.reload.status
   end
 end

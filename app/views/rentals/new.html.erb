@@ -1,10 +1,10 @@
-<h1>Nova Locação</h1>
+<h1 class="text-3xl font-bold mb-6">Nova locação</h1>
 
 <%= form_with(model: @rental, local: true) do |form| %>
   <% if @rental.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@rental.errors.count, 'erro') %> impediram o salvamento:</h2>
-      <ul>
+    <div class="mb-6 rounded-lg border border-red-500/50 bg-red-500/10 p-4 text-red-300">
+      <h2 class="font-semibold mb-2"><%= pluralize(@rental.errors.count, 'erro') %> impediram o salvamento:</h2>
+      <ul class="list-disc list-inside">
         <% @rental.errors.full_messages_for(:base).each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -12,19 +12,21 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :customer_id, 'Cliente' %>
-    <%= form.collection_select :customer_id, @customers, :id, :name, prompt: 'Selecione um cliente' %>
+  <div class="mb-6">
+    <%= form.label :customer_id, 'Cliente', class: "block mb-1 text-sm font-medium text-slate-300" %>
+    <%= form.collection_select :customer_id, @customers, :id, :name, { prompt: 'Selecione um cliente' }, class: "w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-slate-100 focus:outline-none focus:border-sky-500" %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :movie_id, 'Filme', class: "block mb-1 text-sm font-medium text-slate-300" %>
+    <%= form.collection_select :movie_id, @movies, :id, :title, { prompt: 'Selecione um filme' }, class: "w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-slate-100 focus:outline-none focus:border-sky-500" %>
   </div>
 
   <div>
-    <%= form.label :movie_id, 'Filme' %>
-    <%= form.collection_select :movie_id, @movies, :id, :title, prompt: 'Selecione um filme' %>
-  </div>
-
-  <div>
-    <%= form.submit 'Registrar Locação' %>
+    <%= form.submit 'Registrar locação', class: "rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-500 cursor-pointer" %>
   </div>
 <% end %>
 
-<%= link_to 'Voltar', rentals_path %>
+<div class="mt-6">
+  <%= link_to 'Voltar para locações', rentals_path, class: "text-sky-400 hover:text-sky-300" %>
+</div>

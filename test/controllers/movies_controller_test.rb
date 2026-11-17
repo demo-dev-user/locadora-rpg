@@ -23,6 +23,14 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to movie_url(Movie.last)
   end
 
+  test "should create movie with default available status when status is blank" do
+    assert_difference("Movie.count") do
+      post movies_url, params: { movie: { title: "Filme Sem Status" } }
+    end
+
+    assert_equal "available", Movie.last.status
+  end
+
   test "should show movie" do
     get movie_url(@movie)
     assert_response :success

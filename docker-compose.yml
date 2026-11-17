@@ -13,5 +13,7 @@ services:
       - ./log:/rails/log
       - ./tmp:/rails/tmp
     environment:
-      RAILS_ENV: "development"
-      BUNDLE_WITHOUT: ""
+      RAILS_ENV: "production"
+      SECRET_KEY_BASE: "locadora-rpg-secret-key-base-local"
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_SERVE_STATIC_FILES: "true"

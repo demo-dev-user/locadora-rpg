@@ -1,0 +1,58 @@
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-11-17 18:47:49.488777', '2026-11-17 18:47:49.488781') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateCustomers (20261117184736)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "customers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20261117184736') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMovies (20261117184741)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "movies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20261117184741') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRentals (20261117184745)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "rentals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "movie_id" integer NOT NULL, "customer_id" integer NOT NULL, "rented_at" datetime(6), "returned_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2e53b99875"
+FOREIGN KEY ("movie_id")
+  REFERENCES "movies" ("id")
+, CONSTRAINT "fk_rails_0d77a6e91a"
+FOREIGN KEY ("customer_id")
+  REFERENCES "customers" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_movie_id" ON "rentals" ("movie_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rentals_on_customer_id" ON "rentals" ("customer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20261117184745') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (1.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["name", "João Silva"], ["created_at", "2026-11-17 18:49:24.958703"], ["updated_at", "2026-11-17 18:49:24.958703"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMovie Create (1.5ms)[0m  [1m[32mINSERT INTO "movies" ("title", "status", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["title", "O Senhor dos Anéis"], ["status", "available"], ["created_at", "2026-11-17 18:49:24.970911"], ["updated_at", "2026-11-17 18:49:24.970911"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/rental.rb:34:in `set_rented_at_and_update_movie'
+  [1m[36mMovie Update (1.0ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:24.993207"], ["id", 1]]
+  ↳ app/models/rental.rb:34:in `set_rented_at_and_update_movie'
+  [1m[36mRental Create (0.2ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 1], ["customer_id", 1], ["rented_at", "2026-11-17 18:49:24.992853"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:24.992763"], ["updated_at", "2026-11-17 18:49:24.992763"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/rental.rb:17:in `block in return!'
+  [1m[36mRental Update (0.6ms)[0m  [1m[33mUPDATE "rentals" SET "returned_at" = ?, "updated_at" = ? WHERE "rentals"."id" = ?[0m  [["returned_at", "2026-11-17 18:49:25.004543"], ["updated_at", "2026-11-17 18:49:25.004942"], ["id", 1]]
+  ↳ app/models/rental.rb:17:in `block in return!'
+  [1m[36mMovie Update (0.1ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "available"], ["updated_at", "2026-11-17 18:49:25.007077"], ["id", 1]]
+  ↳ app/models/rental.rb:18:in `block in return!'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/models/rental.rb:16:in `return!'
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/rental.rb:34:in `set_rented_at_and_update_movie'
+  [1m[36mMovie Update (1.4ms)[0m  [1m[33mUPDATE "movies" SET "status" = ?, "updated_at" = ? WHERE "movies"."id" = ?[0m  [["status", "rented"], ["updated_at", "2026-11-17 18:49:25.011262"], ["id", 1]]
+  ↳ app/models/rental.rb:34:in `set_rented_at_and_update_movie'
+  [1m[36mRental Create (0.1ms)[0m  [1m[32mINSERT INTO "rentals" ("movie_id", "customer_id", "rented_at", "returned_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["movie_id", 1], ["customer_id", 1], ["rented_at", "2026-11-17 18:49:25.011031"], ["returned_at", nil], ["created_at", "2026-11-17 18:49:25.010982"], ["updated_at", "2026-11-17 18:49:25.010982"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]

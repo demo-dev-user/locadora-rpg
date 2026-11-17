@@ -1,0 +1,30 @@
+<h1>Nova Locação</h1>
+
+<%= form_with(model: @rental, local: true) do |form| %>
+  <% if @rental.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rental.errors.count, 'erro') %> impediram o salvamento:</h2>
+      <ul>
+        <% @rental.errors.full_messages_for(:base).each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :customer_id, 'Cliente' %>
+    <%= form.collection_select :customer_id, @customers, :id, :name, prompt: 'Selecione um cliente' %>
+  </div>
+
+  <div>
+    <%= form.label :movie_id, 'Filme' %>
+    <%= form.collection_select :movie_id, @movies, :id, :title, prompt: 'Selecione um filme' %>
+  </div>
+
+  <div>
+    <%= form.submit 'Registrar Locação' %>
+  </div>
+<% end %>
+
+<%= link_to 'Voltar', rentals_path %>
